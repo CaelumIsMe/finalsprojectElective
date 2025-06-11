@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Archived Products | Malangas Glass{% endblock title %}
+{% block body %}
+<style>
+    .archived-th {
+        background: linear-gradient(90deg, #f8fafc 60%, #ffe5c2 100%);
+        color: #e67e22;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #f3c892;
+    }
+    .archived-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(255,255,255,0.92);
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+        padding: 32px 40px;
+    }
+    .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+        color: #217dbb;
+    }
+</style>
+<div class="archived-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h1 style="color:#e67e22; margin: 0; letter-spacing: 1px;">Archived Products</h1>
+        <a href="{% url 'product_list' %}" class="back-link">&larr; Back to Product List</a>
+    </div>
+    <div style="margin-bottom: 24px;">
+        <p style="color:#888; font-size:1.1em;">These are products that have been archived (soft deleted). You can restore them to the active inventory at any time.</p>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle" style="background: #fff; border-radius: 10px; overflow: hidden;">
+            <thead>
+                <tr>
+                    <th class="archived-th">Name</th>
+                    <th class="archived-th">Description</th>
+                    <th class="archived-th">Quantity</th>
+                    <th class="archived-th">Price</th>
+                    <th class="archived-th">Restore</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description|truncatechars:40 }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>₱{{ product.price }}</td>
+                    <td>
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-success btn-sm" style="padding: 6px 18px; font-size: 1em;">Restore</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-row" style="text-align:center; color:#aaa; font-style:italic;">No archived products.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}

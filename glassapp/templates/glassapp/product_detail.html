@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Product Details | Malangas Glass{% endblock title %}
+{% block body %}
+<style>
+    body {
+        background: url('/static/Glass_BG.jpg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
+    .glass-bg {
+        background: rgba(255,255,255,0.85);
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
+        padding: 2.5rem 2rem 2rem;
+        margin-top: 2.5rem;
+    }
+    .status-in {
+        color: #27ae60;
+        font-weight: bold;
+    }
+    .status-out {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+    .btn-secondary {
+        background-color: #bdc3c7;
+        border-color: #bdc3c7;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn-secondary:hover {
+        background-color: #95a5a6;
+        border-color: #95a5a6;
+        color: white;
+    }
+</style>
+
+<div class="container glass-bg" style="max-width: 700px;">
+    <h1 class="mb-4 text-center" style="color:#3498db;">Product Details</h1>
+    <div class="card p-4 mb-4 shadow-sm">
+        <h3 class="mb-3" style="color:#2c3e50;">{{ product.name }}</h3>
+        <p><strong>Description:</strong> {{ product.description }}</p>
+        <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+        <p><strong>Price:</strong> ₱{{ product.price }}</p>
+        <p><strong>Status:</strong> 
+            {% if product.is_active %}
+                <span class="status-in">Active</span>
+            {% else %}
+                <span class="status-out">Archived</span>
+            {% endif %}
+        </p>
+    </div>
+
+    {% if can_retrieve %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success w-100 mb-3">Retrieve Product</button>
+    </form>
+    {% endif %}
+
+    <a href="{% url 'product_list' %}" class="btn btn-secondary w-100">Back to Product List</a>
+</div>
+{% endblock body %}

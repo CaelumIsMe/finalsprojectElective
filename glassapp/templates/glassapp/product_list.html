@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block title %}Products | Malangas Glass{% endblock title %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glass Shop Inventory</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f8fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+        }
+        th {
+            background: #e3eaf1;
+            color: #34495e;
+            font-weight: 600;
+            border-bottom: 2px solid #d1dbe6;
+        }
+        tr {
+            transition: background 0.2s;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        tr:hover {
+            background: #eaf6fb;
+        }
+        .status-in {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .status-out {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .add-btn {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 18px;
+            transition: background 0.2s;
+        }
+        .add-btn:hover {
+            background: #217dbb;
+        }
+        .import-btn, .export-btn {
+            display: inline-block;
+            background: #27ae60;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 18px;
+            margin-right: 10px;
+            transition: background 0.2s;
+        }
+        .import-btn:hover, .export-btn:hover {
+            background: #219150;
+        }
+        .empty-row {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 18px;
+            transition: background 0.2s;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="{% url 'home' %}" class="back-link">&larr; Back to Home</a>
+            <a href="{% url 'soft_deleted_products' %}" class="back-link">View Archived Products &rarr;</a>
+        </div>
+        <h1>Glass Shop Inventory</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <a href="{% url 'product_create' %}" class="add-btn">+ Add New Product</a>
+                <a href="{% url 'product_import' %}" class="import-btn">Import CSV</a>
+                <a href="{% url 'product_export' %}" class="export-btn">Export CSV</a>
+            </div>
+            <form method="get" style="display: inline-flex; align-items: center; gap: 8px; margin: 0;">
+                <input type="text" name="q" placeholder="Search products..." value="{{ query }}" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                <button type="submit" style="padding: 8px 16px; border-radius: 4px; border: none; background: #3498db; color: #fff;">Search</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th><a href="?sort=name&order={% if sort == 'name' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}" style="color:inherit; text-decoration:none;">Name{% if sort == 'name' %} {% if order == 'asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+                <th>Description</th>
+                <th><a href="?sort=quantity&order={% if sort == 'quantity' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}" style="color:inherit; text-decoration:none;">Quantity{% if sort == 'quantity' %} {% if order == 'asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+                <th><a href="?sort=price&order={% if sort == 'price' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}" style="color:inherit; text-decoration:none;">Price{% if sort == 'price' %} {% if order == 'asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description|truncatechars:40 }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>₱{{ product.price }}</td>
+                <td>
+                    {% if product.in_stock %}
+                        <span class="status-in">In Stock</span>
+                    {% else %}
+                        <span class="status-out">Out of Stock</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'product_edit' product.pk %}" style="color:#2980b9; text-decoration:none; margin-right:10px;">Edit</a>
+                    <a href="{% url 'product_delete' product.pk %}" style="color:#e74c3c; text-decoration:none;">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="empty-row">No products found.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock body %}

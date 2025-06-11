@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    <p><strong>Price:</strong> ${{ product.price }}</p>
+    <p><strong>Stock Status:</strong> {{ product.get_stock_status_display }}</p>
+
+    <a href="{% url 'product_list' %}">Back to Product List</a>
+    <a href="{% url 'product_update' product.id %}">Edit Product</a>
+    <a href="{% url 'product_confirm_delete' product.id %}">Delete Product</a>
+</body>
+</html>

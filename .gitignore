@@ -1,0 +1,46 @@
+# Virtual environment (Windows)
+letsdjango/Lib/
+letsdjango/Scripts/
+letsdjango/Include/
+
+# Virtual environment (Unix/macOS - if used)
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+**/migrations/
+!*/migrations/__init__.py
+
+# SQLite database
+*.sqlite3
+
+# Environment variables / secret settings
+.env
+.env.*
+
+# VSCode settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled C files (optional)
+*.so
+
+# Coverage reports (optional)
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/
