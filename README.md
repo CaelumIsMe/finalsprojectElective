@@ -1,27 +1,115 @@
-# 🪟 Malangas Glass Inventory System
+# 🖪 Malangas Glass Inventory System
 
-![Django](https://img.shields.io/badge/Built%20With-Django-092E20?style=for-the-badge&logo=django&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
-
-> 🔍 A modern, responsive inventory system built for managing glass shop products efficiently.
+A modern inventory management system for a glass shop, built with Django.
 
 ---
 
 ## ✨ Features
 
-- 🧾 **Product CRUD** (Create, Read, Update, Archive)
-- 📦 **CSV Import/Export** for bulk product handling
-- 📊 **In-stock/Out-of-stock** tracking
-- 🔎 **Live product search & filtering**
-- 🧹 **Soft Delete** with restore functionality
-- 📱 **Mobile-responsive UI** using Bootstrap
+* 📦 Product CRUD (Create, Read, Update, Soft Delete)
+* 📁 CSV Import/Export for bulk product management
+* 🟢 In-stock / 🔴 Out-of-stock status tracking
+* 🔍 Product search and sorting
+* 🗓️ Soft delete (archiving) and restore functionality
+* 💻 Responsive, modern UI with seamless navigation
 
 ---
 
-## 🚀 Quick Start
+## ⚙️ Setup Instructions
 
-### 🔁 1. Clone the Repository
+### 🌀 1. Clone the Repository
+
 ```bash
 git clone https://github.com/CaelumIsMe/finalsprojectElective.git
 cd FinalsProject_django
+```
+
+### 🐍 2. Create and Activate a Virtual Environment
+
+```bash
+python -m venv venv
+venv\Scripts\activate  # For Windows
+```
+
+### 📦 3. Install Dependencies
+
+```bash
+pip install django
+```
+
+### 🛠️ 4. Run Migrations
+
+```bash
+python manage.py makemigrations
+# If prompted for an app name, enter:
+default
+python manage.py migrate
+```
+
+### 👤 5. Create a Superuser (Optional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 🚀 6. Start the Development Server
+
+```bash
+python manage.py runserver
+```
+
+### 🌐 7. Access the Web App
+
+📬 Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
+
+---
+
+## 🧑‍💼 Usage
+
+* 📝 **Add/Edit/Delete Products** from the product list page.
+* 📅📄 **Import/Export CSV** for bulk product data.
+* 💄️ **Archive/Restore Products** via the Archived Products page.
+* 🔎 **Search/Sort** products easily using the search bar and sortable headers.
+
+---
+
+## 🗂️ Project Structure
+
+```
+FinalsProject_django/
+🔝 glassapp/
+📍   ├── models.py
+📍   ├── views.py
+📍   ├── forms.py
+📍   ├── urls.py
+📍   └── templates/
+📍       └── glassapp/
+📍           ├── index.html
+📍           ├── product_list.html
+📍           ├── product_form.html
+📍           ├── product_confirm_delete.html
+📍           ├── product_import.html
+📍           ├── product_detail.html
+📍           └── soft_deleted_products.html
+📁 templates/
+📍   └── base.html
+📂 db.sqlite3
+📚 manage.py
+📓 README.md
+```
+
+---
+
+## 🗄️ Screenshots
+
+*Add screenshots of your UI here for a better presentation.*
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+**Malangas Glass Inventory System** — Modern, efficient, and easy to use for any glass shop! 💎
