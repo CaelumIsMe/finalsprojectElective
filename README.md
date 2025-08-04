@@ -20,8 +20,8 @@ A modern inventory management system for a glass shop, built with Django.
 ### 🌀 1. Clone the Repository
 
 ```bash
-git clone https://github.com/CaelumIsMe/finalsprojectElective.git
-cd FinalsProject_django
+git clone https://github.com/CaelumIsMe/malangasinventorysystem-fullstack.git
+cd malangasinventorysystem-fullstack
 ```
 
 ### 🐍 2. Create and Activate a Virtual Environment
